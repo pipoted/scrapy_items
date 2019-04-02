@@ -5,7 +5,6 @@ from bole_spider.items import BoleArticalItem
 
 class BolezaixianSpider(scrapy.Spider):
     name = 'bolezaixian'
-    page = 1
     allowed_domains = ['blog.jobble.com']
     start_urls = ['http://blog.jobbole.com/all-posts/page/1/']
 
@@ -18,8 +17,6 @@ class BolezaixianSpider(scrapy.Spider):
 
             yield data_dict
 
-        if self.page < 564:
-            self.page += 1
-
-            next_url = 'http://blog.jobbole.com/all-posts/page/' + str(self.page) + '/'
+        next_url = response.xpath('//a[@class="next page-numbers"]/@href').extract()[0]
+        if next_url:
             yield scrapy.Request(next_url, self.parse)
