@@ -4,37 +4,23 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-import pymysql
+import pymongo
 
 
 class TencentJobPipeline(object):
     def __init__(self):
-        self.conn = pymysql.Connect(
-            host='localhost',
-            user='root',
-            port=3306,
-            password='xzx199110',
-            database='scrapy',
-        )
-        self.cursor = self.conn.cursor()
-        sql = '''
-        create table if not exists tencent_test (
-        id int primary key not null auto_increment,
-        name varchar(255) not null,
-        types varchar(255) not null,
-        nums varchar(255) not null,
-        city varchar(255) not null
-        )
-        '''
-        self.cursor.execute(sql)
-        self.conn.commit()
+        self.conn = pymongo.MongoClient(host='localhost', port='27017')
+        self.db = self.conn['scrapy']
+        self.col = self.db['tencent_test']
 
     def process_item(self, item, spider):
-        sql = '''
-        insert into tencent_test (name, types, nums, city) values (%s, %s, %s, %s)
-        '''
-        self.cursor.execute(sql, (item['name'], item['types'], item['nums'], item['city']))
-        self.conn.commit()
+        data_dict = {
+            'nama': item['name'],
+            'types': item['types'],
+            'nums': item['nums'],
+            'city': item['city'],
+        }
+        self.col.insert_one(data_dict)
         return item
 
     def __del(self):
