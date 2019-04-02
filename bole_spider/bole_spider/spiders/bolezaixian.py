@@ -6,7 +6,7 @@ from bole_spider.items import BoleArticalItem
 class BolezaixianSpider(scrapy.Spider):
     name = 'bolezaixian'
     allowed_domains = ['blog.jobble.com']
-    start_urls = ['http://blog.jobbole.com/all-posts/page/1/']
+    start_urls = ['http://blog.jobbole.com/all-posts/page/{page}/'.format(page=page) for page in range(1, 500)]
 
     def parse(self, response):
         divs = response.xpath('//div[@class="post floated-thumb"]')
@@ -16,7 +16,3 @@ class BolezaixianSpider(scrapy.Spider):
             data_dict['artical_url'] = div.xpath('.//p/a/@href').extract()[0]
 
             yield data_dict
-
-        next_url = response.xpath('//a[@class="next page-numbers"]/@href').extract()[0]
-        if next_url:
-            yield scrapy.Request(next_url, self.parse)
