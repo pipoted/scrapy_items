@@ -1,28 +1,25 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from lxml import etree
 from bole_spider.items import BoleArticalItem
 
 
 class BolezaixianSpider(scrapy.Spider):
     name = 'bolezaixian'
+    page = 1
     allowed_domains = ['blog.jobble.com']
-    start_urls = ['http://blog.jobbole.com/all-posts/']
+    start_urls = ['http://blog.jobbole.com/all-posts/page/1/']
 
     def parse(self, response):
-        with open('bole.html', 'w') as savefile:
-            pagedata = response.body.decode('utf-8', 'ignore')
-            savefile.write(pagedata)
+        divs = response.xpath('//div[@class="post floated-thumb"]')
+        data_dict = BoleArticalItem()
+        for div in divs:
+            data_dict['artical_name'] = div.xpath('.//p/a/@title').extract()[0]
+            data_dict['artical_url'] = div.xpath('.//p/a/@href').extract()[0]
 
+            yield data_dict
 
-            tree = etree.HTML(pagedata)
-            divs = tree.xpath('//div[@class="post floated-thumb"]')
+        if self.page < 564:
+            self.page += 1
 
-            for div in divs:
-                data_dict = BoleArticalItem()
-                name = div.xpath('./div[@class="post-meta"]/p/a[@class="archive-title"]/@title')[0].strip()
-                url = div.xpath('./div[@class="post-meta"]/p/a[@class="archive-title"]/@href')[0].strip()
-                data_dict['artical_name'] = name
-                data_dict['artical_url'] = url
-
-                yield data_dict
+            next_url = 'http://blog.jobbole.com/all-posts/page/' + str(self.page) + '/'
+            yield scrapy.Request(next_url, self.parse)
