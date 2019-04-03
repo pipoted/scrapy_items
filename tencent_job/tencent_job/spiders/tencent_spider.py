@@ -6,7 +6,7 @@ from tencent_job.items import TencentJobItem
 class TencentSpiderSpider(scrapy.Spider):
     name = 'tencent_spider'
     allowed_domains = ['job.tencent.com']
-    start_urls = ['https://job.tencent.com/position.php?keywords=python&start={offset}#a'.format(offset=offset * 10) for offset in range(56)]
+    start_urls = ['https://job.tencent.com/position.php?keywords=&start={offset}#a'.format(offset=offset * 10) for offset in range(312)]
     # start_urls = ['https://job.tencent.com/position.php?keywords=python&start=0#a']
 
     def parse(self, response):
