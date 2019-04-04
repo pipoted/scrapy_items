@@ -7,17 +7,23 @@
 import pymongo
 
 
-class BaidubaikePipeline(object):
+class DoubanPipeline(object):
     def __init__(self):
         self.conn = pymongo.MongoClient(host='localhost', port=27017)
         self.db = self.conn['scrapy_items']
-        self.col = self.db['baidubaike']
+        self.col = self.db['douban_movie_test']
 
     def process_item(self, item, spider):
         document = {
-            'key': item['key'],
+            'name': item['name'],
+            'dire': item['dire'],
+            'writer': item['writer'],
+            'actor': item['actor'],
+            'types': item['types'],
+            'area': item['area'],
+            'date': item['date'],
             'desc': item['desc'],
-            'url': item['url'],
+            'score': item['score'],
         }
         self.col.insert_one(document)
         return item

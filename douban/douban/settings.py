@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for baidubaike project
+# Scrapy settings for douban project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'baidubaike'
+BOT_NAME = 'douban'
 
-SPIDER_MODULES = ['baidubaike.spiders']
-NEWSPIDER_MODULE = 'baidubaike.spiders'
+SPIDER_MODULES = ['douban.spiders']
+NEWSPIDER_MODULE = 'douban.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'baidubaike (+http://www.yourdomain.com)'
+#USER_AGENT = 'douban (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -39,21 +39,21 @@ DOWNLOAD_DELAY = 1.5
 #TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
-#DEFAULT_REQUEST_HEADERS = {
-#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-#   'Accept-Language': 'en',
-#}
+DEFAULT_REQUEST_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36',
+    'Origin': 'https://movie.douban.com',
+}
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'baidubaike.middlewares.BaidubaikeSpiderMiddleware': 543,
+#    'douban.middlewares.DoubanSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'baidubaike.middlewares.BaidubaikeDownloaderMiddleware': 543,
+#    'douban.middlewares.DoubanDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,7 +65,7 @@ DOWNLOAD_DELAY = 1.5
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'baidubaike.pipelines.BaidubaikePipeline': 300,
+   'douban.pipelines.DoubanPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -8,8 +8,7 @@
 import scrapy
 
 
-class BaidubaikeItem(scrapy.Item):
-    key = scrapy.Field()
-    desc = scrapy.Field()
-    url = scrapy.Field()
+class RenrenItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
     pass
