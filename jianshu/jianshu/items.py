@@ -9,6 +9,11 @@ import scrapy
 
 
 class JianshuItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+    title = scrapy.Field()
+    pub_time = scrapy.Field()
+    word_age = scrapy.Field()
+    view_count = scrapy.Field()
+    comment_count = scrapy.Field()
+    like_count = scrapy.Field()
+    url = scrapy.Field()
     pass
