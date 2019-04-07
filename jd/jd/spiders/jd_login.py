@@ -6,12 +6,11 @@ class JdLoginSpider(scrapy.Spider):
     name = 'jd_login'
     allowed_domains = ['jd.com']
     start_urls = ['https://order.jd.com/center/list.action']
-    cookies = {
+    cookie = {
         '__jdu': '582778564',
         'shshshfpa': 'ab639f2e-ecdf-3480-9a2d-3ba92e39e9c8-1551170095',
         'shshshfpb': 'a7C47tV9AqBIxImLJ6Xhk%2FQ%3D%3D',
         'areaId': '1',
-        '__jda': '122270672.582778564.1550324330.1551170094.1554629390.2',
         '__jdc': '122270672',
         '__jdv': '122270672|direct|-|none|-|1554629389785',
         'PCSYCityID': '1',
@@ -26,15 +25,15 @@ class JdLoginSpider(scrapy.Spider):
         'cn': '0',
         'ipLoc-djd': '1-72-2799-0',
         'shshshfp': '3eac930a42d0d5f127cd14ca1fe47c3c',
-        'shshshsID': 'd5296721d8a80dc348ca0e4d3ae13a5b_5_1554629627996',
         '3AB9D23F7A4B3C9B': 'Y54QSF55YNJRBKROHGWQ3CWG6N2V6OHUR3SCABHLEW3MY3TKGDNHJDIGPEXCD3WRTLALG3EJ33LI4RDZSNDF2VSYLQ',
-        '__jdb': '122270672.13.582778564|2.1554629390',
-        'thor': '8218B3D7CD43D23B845DC89A136BA51081A1EEF28047A6FEBE6F249A43EFF75148DB82CFC15F03C36A21515CD55A5FCDB9F92C8725679E773D57BCDB75EEDD247826139CE7CA771B48AFA45C9650E247C7F911482EB2A5DA2C927282DF13A4DC26122A0494AB9220D7C51DE0AD9B2BCBDD428D2D9E6D327F24B7E0DE2F2FA197F83F4DBE3EE4F493016E7A71EF2CB26C',
+        '__jda': '122270672.582778564.1550324330.1554629390.1554635067.3',
+        'thor': '8218B3D7CD43D23B845DC89A136BA51081A1EEF28047A6FEBE6F249A43EFF751DEFB67B0824A536F9129101880C2448C41BF8B51EA469725278139E0944BF16650CDDE0FE0787D8E8220328F47DD713F6BF5A8D813B49B9FFE926D055FCBAA75FC05FA964961E8925731B17EB12523583DAED06D7305629E327B665367F99213628841049F3D8FF77A860BACA237D85B',
+        '__jdb': '122270672.3.582778564|3.1554635067',
     }
 
     def start_requests(self):
         for url in self.start_urls:
-            yield scrapy.FormRequest(url, cookies=self.cookies, callback=self.parse_jd)
+            yield scrapy.FormRequest(url, cookies=self.cookie, callback=self.parse_jd)
 
     def parse_jd(self, response):
         with open('jd_login.html', 'wb') as fp:
